@@ -1,0 +1,49 @@
+
+<div id="right-nav" class="right-nav-expanded">
+    <ul class="nav-list">
+        <li class="list-item-up" style="display:none">
+            <a onclick="show_right_nav()" title="Show"><i class="pe-7s-angle-up"></i></a>
+        </li>
+        <li class="list-item" style="padding-top:20px;">
+            <a onclick="hide_right_nav()" title="Hide"><i class="pe-7s-close"></i></a>
+        </li>
+        <li class="list-item">
+            <a onclick="return false" title="Notifications"><i class="pe-7s-bell"></i></a>
+        </li>
+        <li class="list-item">
+            <a href="" title="Calender"><i class="pe-7s-date" ></i></a>
+        </li>
+        <li class="list-item">
+            <a href="" title="Leads Stats"><i class="pe-7s-display1" ></i></a>
+        </li>
+        <li class="list-item">
+            <a onclick="return false" title="Automation"><i class="pe-7s-config" ></i></a>
+        </li>
+        <li class="list-item">
+            <a onclick="return false" title="Mails"><i class="pe-7s-mail" ></i></a>
+        </li>
+        <li class="list-item">
+            <a onclick="return false" title="Message Center"><i class="pe-7s-chat" ></i></a>
+        </li>
+        <li class="list-item">
+            <a href="" title="System Settings"><i class="pe-7s-tools" ></i></a>
+        </li>
+    </ul>
+</div>
+
+<script>
+
+function hide_right_nav(elem){
+    $("#right-nav").removeClass("right-nav-expanded").addClass("right-nav-unexpanded");
+    $("#right-nav").css({"height":"10px"});
+    $("#right-nav .list-item").hide();
+    $("#right-nav .list-item-up").show();
+}
+
+function show_right_nav(elem){
+    $("#right-nav").removeClass("right-nav-unexpanded").addClass("right-nav-expanded");
+    $("#right-nav").removeAttr("style");
+    $("#right-nav .list-item").show();
+    $("#right-nav .list-item-up").hide();
+}
+</script>

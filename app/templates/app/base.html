@@ -1,0 +1,185 @@
+{% load static %}
+{% load common_filters %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900' rel='stylesheet' type='text/css'>
+
+    <!-- Page title -->
+    <title>{% page_title %}</title>
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="{% static 'vendor/fontawesome/css/font-awesome.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/animate.css/animate.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/toastr/toastr.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/select2/dist/css/select2.min.css' %}"/>
+    
+    <!-- App styles -->
+    <link rel="stylesheet" href="{% static 'styles/pe-icons/pe-icon-7-stroke.css' %}"/>
+    <link rel="stylesheet" href="{% static 'styles/pe-icons/helper.css' %}"/>
+    <link rel="stylesheet" href="{% static 'styles/stroke-icons/style.css' %}"/>
+    
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+
+    {% load_css_files css_files %}
+
+    <style>
+    .dropdown-menu {padding:0px;}
+    .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus{
+        background-color:#000000;
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+    }
+        
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background:rgb(248, 169, 0)
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555; 
+    }
+
+    div#right-nav{
+        position:fixed;
+        right:0;
+        bottom:0px;
+        height:100%;
+        background-color: #F8A900;
+        width:40px;        
+        z-index:1000;
+        -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
+        transition: width 2s;
+    }
+
+    div.right-nav-expanded{
+        top:60px;
+    }
+    div.right-nav-unexpanded{
+        bottom:0px;
+        min-height: 40px;
+    }
+
+    div.trans-right-nav{
+        height: 100px;
+        background: red;
+        bottom:0;
+    }
+
+    ul.nav-list{
+        list-style:none;
+        margin:0px;
+        padding:0px;
+    }
+    .nav-list li{
+        text-align: center;
+        padding:5px 0px;
+    }
+
+    .nav-list a{
+        font-size: 20px;
+        font-weight:bold;
+        color:#ffffff;
+        cursor:pointer;
+        display:block;
+    }
+
+    </style>
+
+</head>
+<body>
+
+<!-- Wrapper-->
+<div class="wrapper">
+
+    <!-- Header-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div id="mobile-menu">
+                    <div class="left-nav-toggle">
+                        <a href="#">
+                            <i class="stroke-hamburgermenu"></i>
+                        </a>
+                    </div>
+                </div>
+                <a class="navbar-brand" href="#" style="padding:20px 10px;letter-spacing:0px">TSM CRM <small style="margin-left:10px;"> ver 1.0</small></a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <div class="left-nav-toggle">
+                    <a href="#">
+                        <i class="stroke-hamburgermenu"></i>
+                    </a>
+                </div>
+                <form class="navbar-form navbar-left">
+                    <input type="text" class="form-control" placeholder="Search data for analysis" style="width: 175px">
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class=" profil-link">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="true">
+                            <span class="profile-address" style="text-transform:none">{{user.first_name|title}} {{user.last_name|title}}</span>
+                            <img src="" class="img-circle">
+                        </a>
+                        <ul class="dropdown-menu" style="background-color: rgba(68, 70, 79)">
+                            <li>
+                                <a href="/profile" style="color:#FFFFFF">
+                                    <i class="pe pe-7s-note2 text-warning" style="font-size: 15px;font-weight:bold;"></i> 
+                                    <span style="margin-left:5px;line-height:30px;">Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'logout' %}" style="color:#FFFFFF">
+                                    <i class="pe pe-7s-door-lock text-warning" style="font-size: 15px;font-weight:bold;"></i> 
+                                    <span style="margin-left:5px;line-height:30px;">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End header-->
+
+    <!-- Javascript Files Loading -->
+    {% load_javascript_files js_files %}
+    <!-- Javascript Files Loading End -->
+
+    <!-- Navigation-->
+    {% include 'menu_templates/left_menu.html' %}
+    <!-- Navigation -->
+
+    <!-- Navigation-->
+    {% include 'menu_templates/right_menu.html' %}
+    <!-- Navigation -->
+
+    
+
+
+    <section class="content">
+        <div class="container-fluid" style="padding-right: 50px">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </section>
+    <!-- End main content-->
+
+</div>    
+
+</body>
+</html>

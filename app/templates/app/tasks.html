@@ -1,0 +1,333 @@
+{% extends 'app/base.html' %}
+{% block content %}
+
+{% load common_filters %}
+{% load tasks_filters %}
+<style>
+
+table thead{
+    background-color: #24262d;
+    color: #ffffff;
+}
+
+span.user-item{
+    border: 1px solid #eeeeee;
+    padding: 5px 10px;
+    text-align:left;
+    background-color:#F8A900; 
+    color:#000000;
+    margin-right: 10px;
+}
+
+</style>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="view-header">
+            <div class="header-icon">
+                <i class="pe page-header-icon pe-7s-users"></i>
+            </div>
+            <div class="header-title">
+                <h3>
+                    Tasks
+                    <button type="button" onclick="location.reload()" class="btn btn-success btn-xs pull-right" style="margin-top:10px;margin-left:10px;">Refresh</button>
+                    <button type="button" data-toggle="modal" data-target="#modal-add-task" class="btn btn-success btn-xs pull-right" style="margin-top:10px;">Add Task</button>
+                </h3>
+                <small>
+                    List of tasks created, responsible, observer or participant
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" style="margin-bottom:0px;font-size:80%">
+                <thead class="text-center">
+                    <td width="200px">Subject</td>                    
+                    <td>Res. Person</td>
+                    <td>Deadline</td>
+                    <td width="50px">Priority</td>
+                    <td width="50px">Email</td>
+                    <td width="50px">Remind</td>
+                    <td width="50px">Repeat</td>
+                    <td>Created By</td>
+                    <td>Created On</td>
+                </thead>
+                {% for tasks in object_list %}
+                <tr id="parent-row-{{tasks.id|safe}}" class="parent-rows">
+                    <td style="word-wrap: break-word;cursor:pointer" onclick="open_my_row({{tasks.id}})">{{tasks.subject|safe}}</td>                    
+                    <td>{{tasks.responsible_person|safe}}</td>
+                    <td>{{tasks.deadline}}</td>
+                    <td class="text-center">{% tick_mark tasks.high_priority %}</td>
+                    <td class="text-center">{% tick_mark tasks.email_notification %}</td>
+                    <td class="text-center">{% tick_mark tasks.remind %}</td>
+                    <td class="text-center">{% tick_mark tasks.repeat %}</td>
+                    <td>{{tasks.created_by|safe}}</td>
+                    <td>{{tasks.created_on}}</td>
+                </tr>
+                <tr id="row-{{tasks.id|safe}}" style="display:none" class="hidden-rows">
+                    <td colspan="20" class="table-responsive">   
+                        <table class="table table-bordered" style="margin:0px;background: transparent">
+                            <tr>
+                                <td colspan="20" style="background-color: #24262d;color: #ffffff;">
+                                    <div class="btn-group pull-right" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-xs btn-warning">Edit Task</button>
+                                        {% if tasks.id|observers_present %}
+                                            <button onclick="remove_observers({{tasks.id|safe}})" type="button" class="btn btn-xs btn-warning">Remove Observers</button>
+                                        {% endif %}
+                                        {% if tasks.id|participants_present %}
+                                            <button onclick="remove_participants({{tasks.id|safe}})" type="button" class="btn btn-xs btn-warning">Remove Participants</button>
+                                        {% endif %}
+                                        <button type="button" onclick="task_logs({{tasks.id|safe}})" class="btn btn-xs btn-warning">Task Logs</button>
+                                        <button type="button" class="btn btn-xs btn-warning">Notification Logs</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100px" style="background-color: #24262d;color: #ffffff;">Details</td>
+                                <td style="word-wrap: break-word;">{{tasks.details|safe}}</td>
+                            </tr>
+                            {% if tasks.id|observers_present %}
+                            <tr>
+                                <td width="100px" style="background-color: #24262d;color: #ffffff;">Observers</td>
+                                <td style="word-wrap: break-word;">
+                                    {% get_observers tasks.id %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if tasks.id|participants_present %}
+                            <tr>
+                                <td width="100px" style="background-color: #24262d;color: #ffffff;">Participants</td>
+                                <td style="word-wrap: break-word;">{% get_participants tasks.id %}</td>
+                            </tr>
+                            {% endif %}
+                        </table>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="50">No Records</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% if is_paginated %}
+                {% pagination_html page_obj %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- MODAL LEAD ACTIVE -->
+
+<div class="modal" id="modal-add-task" tabindex="-1" role="dialog" style="background-color: rgba(242, 242, 242, 0.8)">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" style="padding: 15px 10px 10px 10px; ">
+                <h5 class="m-t-none">Add Task</h5>
+                <hr style="margin:0px">
+                <form method="POST" class="add-task-form">
+                    {% csrf_token %}
+                    <div class="row form-group" style="margin-bottom:2px;margin-top:5px;">
+                        <label for="subject" class="col-md-3 control-label" style="text-align:right; line-height:30px; font-size:80%">Title</label>
+                        <div class="col-md-9">
+                            <input  autocomplete="off" type="text" class="form-control input-sm" id="subject" name="subject" required>
+                        </div>
+                    </div>
+                    <div class="row form-group" style="margin-bottom:2px;margin-top:5px;">
+                        <label for="details" class="col-md-3 control-label" style="text-align:right; line-height:30px; font-size:80%">Details</label>
+                        <div class="col-md-9">
+                            <textarea class="form-control" name="details"></textarea>
+                        </div>
+                    </div>
+                    <div class="row form-group" style="margin-bottom:2px;margin-top:10px;">
+                        <label for="responsible_person" class="col-md-3 control-label" style="text-align:right; line-height:30px; font-size:80%">Responsible Person</label>
+                        <div class="col-md-9">
+                            {% user_list 'responsible_person' %}
+                        </div>
+                    </div>
+                    <div class="row form-group" style="margin-bottom:2px;margin-top:10px;">
+                        <label for="deadline" class="col-md-3 control-label" style="text-align:right; line-height:30px; font-size:80%">Deadline</label>
+                        <div class=' col-md-9 input-group date' id='datetimepicker1' style="padding-right: 10px;padding-left: 10px;">
+                            <input autocomplete="off" type='text' class="form-control" name="deadline"/>
+                            <span class="input-group-addon">
+                                <i class="pe-7s-timer" style="color:#ffffff"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <hr style="margin-top: 5px; margin-bottom: 10px">
+                    <div class="row form-group" style="margin-bottom:2px;margin-top:5px;">
+                        <label for="high_priority" class="col-md-2 control-label" style="text-align:right; line-height:30px; font-size:80%">High Priority</label>
+                        <div class="col-md-1">
+                            <input type="checkbox" value="1" id="high_priority" name="high_priority" style="margin-top:10px;">
+                        </div>
+                        <label for="email_notification" class="col-md-2 control-label" style="text-align:right; line-height:30px; font-size:80%">Email Notify</label>
+                        <div class="col-md-1">
+                            <input type="checkbox" value="1" id="email_notification" name="email_notification" style="margin-top:10px;">
+                        </div>
+                        <label for="remind" class="col-md-2 control-label" style="text-align:right; line-height:30px; font-size:80%">Remind</label>
+                        <div class="col-md-1">
+                            <input type="checkbox" value="1" id="remind" name="remind" style="margin-top:10px;">
+                        </div>
+                        <label for="repeat" class="col-md-2 control-label" style="text-align:right; line-height:30px; font-size:80%">Repeat</label>
+                        <div class="col-md-1">
+                            <input type="checkbox" value="1" id="repeat" name="repeat" style="margin-top:10px;">
+                        </div>
+                    </div>
+                    <hr style="margin-top: 0px; margin-bottom: 10px">
+                    <div class="row form-group" style="margin-bottom:2px;margin-top:5px;">
+                        <label for="observers" class="col-md-3 control-label" style="text-align:right; line-height:30px; font-size:80%">Observers</label>
+                        <div class="col-md-9">
+                            {% user_list 'observers' 'multiple' %}
+                        </div>
+                    </div>
+                    <div class="row form-group" style="margin-bottom:2px;margin-top:5px;">
+                        <label for="participants" class="col-md-3 control-label" style="text-align:right; line-height:30px; font-size:80%">Participants</label>
+                        <div class="col-md-9">
+                            {% user_list 'participants' 'multiple' %}
+                        </div>
+                    </div>
+                    <hr style="margin-top: 10px; margin-bottom: 10px">
+                    <div class="row text-center" style="padding-top:0px;">
+                        <button type="submit" class="save btn btn-success btn-xs">Save</button>
+                        <button type="button" class="btn btn-default btn-xs" data-dismiss="modal">Close</button>
+                    </div>
+                </form>                
+                <div class="row" style="margin-top:10px;font-size:80%">
+                    <p style="background-color:#ff0000; color:#ffffff; padding:10px 10px; margin:0px">
+                    <span class="text-center" style="text-decoration:underline; display:block">NOTE</span> 
+                    <br>
+                    1. Please don't select the same person as responsible, observer and participant.
+                    <br>
+                    2. Responsible Person is always a single entry.
+                    <br>
+                    3. Observers can monitor the task but will not take part in the task.
+                    <br>
+                    4. Participants can perform the task along with the responsible person or in his guidance.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL TASK LOGS -->
+
+<div class="modal" id="modal-task-logs" tabindex="-1" role="dialog" style="background-color: rgba(242, 242, 242, 0.8)">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" style="padding: 15px 10px 10px 10px; ">
+                <h5 class="m-t-none">Task Logs</h5>
+                <hr style="margin:0px">
+                <div id="task-logs-data"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-xs" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL EDIT TASK -->
+
+<div class="modal" id="modal-edit-task" tabindex="-1" role="dialog" style="background-color: rgba(242, 242, 242, 0.8)">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" style="padding: 15px 10px 10px 10px; ">
+                <h5 class="m-t-none">Edit Task</h5>
+                <hr style="margin:0px">
+                <form method="POST" class="add-task-form">
+                    {% csrf_token %}
+                    <div class="row form-group" style="margin-bottom:2px;margin-top:5px;">
+                        <label for="subject" class="col-md-3 control-label" style="text-align:right; line-height:30px; font-size:80%">Title</label>
+                        <div class="col-md-9">
+                            <input  autocomplete="off" type="text" class="form-control input-sm" id="subject" name="subject" required>
+                        </div>
+                    </div>
+                    <div class="row form-group" style="margin-bottom:2px;margin-top:5px;">
+                        <label for="details" class="col-md-3 control-label" style="text-align:right; line-height:30px; font-size:80%">Details</label>
+                        <div class="col-md-9">
+                            <textarea class="form-control" name="details"></textarea>
+                        </div>
+                    </div>
+                    <div class="row form-group" style="margin-bottom:2px;margin-top:10px;">
+                        <label for="responsible_person" class="col-md-3 control-label" style="text-align:right; line-height:30px; font-size:80%">Responsible Person</label>
+                        <div class="col-md-9">
+                            {% user_list 'responsible_person' %}
+                        </div>
+                    </div>
+                    <div class="row form-group" style="margin-bottom:2px;margin-top:10px;">
+                        <label for="deadline" class="col-md-3 control-label" style="text-align:right; line-height:30px; font-size:80%">Deadline</label>
+                        <div class=' col-md-9 input-group date' id='datetimepicker1' style="padding-right: 10px;padding-left: 10px;">
+                            <input autocomplete="off" type='text' class="form-control" name="deadline"/>
+                            <span class="input-group-addon">
+                                <i class="pe-7s-timer" style="color:#ffffff"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <hr style="margin-top: 5px; margin-bottom: 10px">
+                    <div class="row form-group" style="margin-bottom:2px;margin-top:5px;">
+                        <label for="high_priority" class="col-md-2 control-label" style="text-align:right; line-height:30px; font-size:80%">High Priority</label>
+                        <div class="col-md-1">
+                            <input type="checkbox" value="1" id="high_priority" name="high_priority" style="margin-top:10px;">
+                        </div>
+                        <label for="email_notification" class="col-md-2 control-label" style="text-align:right; line-height:30px; font-size:80%">Email Notify</label>
+                        <div class="col-md-1">
+                            <input type="checkbox" value="1" id="email_notification" name="email_notification" style="margin-top:10px;">
+                        </div>
+                        <label for="remind" class="col-md-2 control-label" style="text-align:right; line-height:30px; font-size:80%">Remind</label>
+                        <div class="col-md-1">
+                            <input type="checkbox" value="1" id="remind" name="remind" style="margin-top:10px;">
+                        </div>
+                        <label for="repeat" class="col-md-2 control-label" style="text-align:right; line-height:30px; font-size:80%">Repeat</label>
+                        <div class="col-md-1">
+                            <input type="checkbox" value="1" id="repeat" name="repeat" style="margin-top:10px;">
+                        </div>
+                    </div>
+                    <hr style="margin-top: 0px; margin-bottom: 10px">
+                    <div class="row form-group" style="margin-bottom:2px;margin-top:5px;">
+                        <label for="observers" class="col-md-3 control-label" style="text-align:right; line-height:30px; font-size:80%">Observers</label>
+                        <div class="col-md-9">
+                            {% user_list 'observers' 'multiple' %}
+                        </div>
+                    </div>
+                    <div class="row form-group" style="margin-bottom:2px;margin-top:5px;">
+                        <label for="participants" class="col-md-3 control-label" style="text-align:right; line-height:30px; font-size:80%">Participants</label>
+                        <div class="col-md-9">
+                            {% user_list 'participants' 'multiple' %}
+                        </div>
+                    </div>
+                    <hr style="margin-top: 10px; margin-bottom: 10px">
+                    <div class="row text-center" style="padding-top:0px;">
+                        <button type="submit" class="save btn btn-success btn-xs">Save</button>
+                        <button type="button" class="btn btn-default btn-xs" data-dismiss="modal">Close</button>
+                    </div>
+                </form>                
+                <div class="row" style="margin-top:10px;font-size:80%">
+                    <p style="background-color:#ff0000; color:#ffffff; padding:10px 10px; margin:0px">
+                    <span class="text-center" style="text-decoration:underline; display:block">NOTE</span> 
+                    <br>
+                    1. Please don't select the same person as responsible, observer and participant.
+                    <br>
+                    2. Responsible Person is always a single entry.
+                    <br>
+                    3. Observers can monitor the task but will not take part in the task.
+                    <br>
+                    4. Participants can perform the task along with the responsible person or in his guidance.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+csrfmiddlewaretoken = '{{ csrf_token }}';
+</script>
+
+{% endblock %}
