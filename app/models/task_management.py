@@ -24,6 +24,7 @@ class Task_Table(models.Model):
     email_notification = models.BooleanField(default = False, db_index = True,)
     remind = models.BooleanField(default = False, db_index = True,)
     repeat = models.BooleanField(default = False, db_index = True,)
+    completed = models.BooleanField(default = False, db_index = True,)
     created_by = models.ForeignKey(User, db_index = True, on_delete = models.SET_NULL, null = True,)
     created_on = models.DateTimeField(auto_now = True, db_index = True,)
 

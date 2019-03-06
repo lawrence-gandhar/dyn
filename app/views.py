@@ -72,7 +72,7 @@ class TasksView(ListView):
 
     model = Task_Table
     paginate_by = 30
-    ordering = ["-created_on"]
+    ordering = ["-deadline"]
     
     def get_queryset(self):
         qs = super().get_queryset() 
