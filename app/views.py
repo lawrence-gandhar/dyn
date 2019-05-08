@@ -16,6 +16,7 @@ from django.http import HttpResponse, Http404, HttpResponseForbidden, HttpRespon
 # Generic views as Class
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
+from django.views import View
 
 # system imports
 import sys, os, csv, json, datetime, calendar, re
@@ -42,14 +43,65 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage, PageNotAnIn
 # Models Import
 from app.models import *
 from app.forms import *
+from app.helpers import user_management, tasks_management, common_functions
+
+
+
+#
+#***************************************************************************************
+# Register user
+#***************************************************************************************
+def home(request):
+    template_name = 'app/index.html'
+    return render(request, template_name, {})
+
+
+
+#
+#***************************************************************************************
+# Register user
+#***************************************************************************************
+class registerUserView(View):
+    template_name = 'registration/register_user.html'
+
+    def get(self, request):
+        return render(request, self.template_name, {})
+
+    def post(self, request):
+
+        data = {}
+
+        if user_management.email_exists(request.POST["email"]):
+            messages.error(request, '{} is already registered'.format(request.POST["email"]))
+            return render(request, self.template_name, data)
+
+
+        if common_functions.valid_username(request.POST["username"]):
+            if user_management.username_exists(request.POST["username"]):
+                messages.error(request, 'Username already exists')
+                data["username"] = request.POST["username"]
+                data["email"] = request.POST["email"]
+                data["first_name"] = request.POST["firstname"]
+                data["last_name"] = request.POST["lastname"]
+
+                return render(request, self.template_name, data)
+            else:
+                user = User.objects.create_user(request.POST["username"], request.POST["email"], request.POST["psw"])
+                user.first_name = request.POST["firstname"] 
+                user.last_name = request.POST["lastname"] 
+                user.save()
+
+                auth_user = authenticate(username=request.POST["username"], password=request.POST["psw"])
+                login(request, auth_user)
+                return redirect('/dashboard/')
 
 #
 #**************************************************************************************
 # Create your views here.
 #**************************************************************************************
 
-class HomeView(ListView):
-    template_name = 'app/index.html'
+class DashboardView(ListView):
+    template_name = 'app/dashboard.html'
 
     model = User
     paginate_by = 2
@@ -249,7 +301,13 @@ def task_logs(request):
 #   EDIT TASK 
 #**************************************************************************************
 @login_required
+def edit_task_form(request):
+    if request.is_ajax():
+        return HttpResponse(tasks_management.edit_task_form_template(request.POST["id"]))
+    return HttpResponse('')
+
+@login_required
 def edit_task(request):
     if request.is_ajax():
-        return HttpResponse('')
-    return HttpResponse('')
+        return HttpResponse(1)
+    return HttpResponse(0)

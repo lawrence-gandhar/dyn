@@ -106,3 +106,4 @@ def participants_present(value):
             return True
         return False   
     return False
+

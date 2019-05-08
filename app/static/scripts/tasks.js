@@ -5,7 +5,7 @@ $(document).ready(function(){
         format: 'YYYY-MM-DD hh:mm:ss'
     });
 
-    $(".select2_demo_3").select2({
+    $(".select2_demo_3,.select2_demo_4").select2({
         placeholder: "Select",
         allowClear: true
     });
@@ -15,6 +15,22 @@ $(document).ready(function(){
         e.preventDefault()
 
         $.post("add_task/", $("form.add-task-form").serialize(), function(data){
+            if(data["ret"] === true){
+                alert(data["message"]);
+                location.href = '/tasks/'
+            }else{
+                alert(data["message"]);
+                location.reload()
+            }
+        });
+
+        return false;
+    });
+
+    $("form.edit-task-form").submit(function(e){
+        e.preventDefault()
+
+        $.post("add_task/", $("form.edit-task-form").serialize(), function(data){
             if(data["ret"] === true){
                 alert(data["message"]);
                 location.href = '/tasks/'
@@ -53,7 +69,13 @@ function task_logs(id){
     $.post("/tasks/logs/",{id:id, csrfmiddlewaretoken: csrfmiddlewaretoken}, function(data){
         $("div#task-logs-data").empty().append(data);
         $("div#modal-task-logs").modal('show');
-        console.log(data)
+    });
+}
+
+function get_edit_form(id){
+    $.post("/tasks/edit_task_form/",{id:id, csrfmiddlewaretoken: csrfmiddlewaretoken}, function(data){
+        $("div#form-template").empty().append(data);
+        $("#modal-edit-task").modal('show');
     });
 }
 
