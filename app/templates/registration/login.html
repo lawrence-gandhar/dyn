@@ -21,6 +21,42 @@
     <link rel="stylesheet" href="{% static 'styles/pe-icons/helper.css' %}"/>
     <link rel="stylesheet" href="{% static 'styles/stroke-icons/style.css' %}"/>
     <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+
+    <style>
+        label{
+            text-align: right;
+        }
+
+        input[type=text], input[type=password]{
+            display: block;
+            width: 100%;
+            height: calc(2.25rem + 2px);
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+
+        .errorlist{
+            padding-inline-start: 0px;
+        }
+
+        .errorlist li{
+            list-style:none;
+            text-align:right;
+            background-color:#ff0000;
+            color:#ffffff;
+            padding:5px 10px;
+            font-size:85%;
+        }
+
+    </style>
+
 </head>
 <body class="blank">
 
@@ -30,29 +66,18 @@
 
     <!-- Main content-->
     <section class="content">
-        <div class="container-center animated slideInDown">
+        <div class="container-center animated slideInDown" style="max-width: 320px;padding:0px;">
             <div class="view-header">
                 <div class="header-icon">
                     <i class="pe page-header-icon pe-7s-unlock"></i>
                 </div>
                 <div class="header-title">
                     <h3>Sales CRM</h3>
-                    <small>
-                        Please enter your credentials to login.
-                    </small>
                 </div>
             </div>
 
             <div class="panel panel-filled">
-                <div class="panel-body">
-                    <form action="" method="post" id="loginForm" novalidate>
-                      {% csrf_token %}
-                      {{ form.as_p }}
-                      <div class="text-center">
-                        <input class="btn btn-accent" type="submit" name="submit" value="Login">
-                      </div>
-                    </form>
-
+                <div class="panel-body" style="padding-top: 15px">
                     {% if messages %}
                         <div style="margin-top:10px;">
                             {% for message in messages %}
@@ -60,6 +85,29 @@
                             {% endfor %}
                         </div>
                     {% endif %}
+                    <form action="" method="post" id="loginForm" novalidate>
+                        {% csrf_token %}
+
+                        <div class="form-group row" style="margin-bottom:5px">
+                            <label class="col-sm-4 col-form-label" for="{{ form.username.id_for_label }}">Username</label>
+                            <div class="col-sm-8">
+                                {{ form.username }}
+                            </div>
+                        </div>
+                        <div class="row">{{ form.username.errors }}</div>
+
+                        <div class="form-group row" style="margin-bottom:5px">
+                            <label class="col-sm-4 col-form-label" for="{{ form.password.id_for_label }}">Password</label>
+                            <div class="col-sm-8">
+                                {{ form.password }}
+                            </div>
+                        </div>
+                        <div class="row">{{ form.password.errors }}</div>
+                        <div class="text-center">
+                            <a href="{% url 'forgot_password' %}" style="float:right; display:inline; font-size:85%; margin-left:45px; margin-top:8px">Forgot Password</a>
+                            <input class="btn btn-accent btn-sm" type="submit" name="submit" value="Login" style="float:right;">                            
+                        </div>
+                    </form>
                 </div>
             </div>
 
