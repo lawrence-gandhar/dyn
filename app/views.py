@@ -49,12 +49,20 @@ from app.helpers import user_management, tasks_management, common_functions
 
 #
 #***************************************************************************************
-# Register user
+# Home/Index
 #***************************************************************************************
 def home(request):
     template_name = 'app/index.html'
     return render(request, template_name, {})
 
+
+#
+#***************************************************************************************
+# Forgot Password
+#***************************************************************************************
+def forgot_password(request):
+    template_name = 'registration/forgot_password.html'
+    return render(request, template_name, {})
 
 
 #

@@ -6,6 +6,7 @@ try:
     from django.urls import path, include, re_path
     urlpatterns = [
         path('', home, name='home'),
+        path('forgot-password', forgot_password, name='forgot_password'),
         path('user/register/', registerUserView.as_view(), name='register_user'),
         path('dashboard/', login_required(DashboardView.as_view()), name='dashboard'),
         path('tasks/', login_required(TasksView.as_view()), name='tasks'),
@@ -22,6 +23,7 @@ except ImportError:
 
     urlpatterns = [
         url(r'^$', home, name='home'),
+        url(r'forgot-password', forgot_password, name='forgot_password'),
         url(r'user/register/', registerUserView.as_view(), name='register_user'),
         url(r'dashboard/', login_required(DashboardView.as_view()), name='dashboard'),
         url(r'tasks/', login_required(TasksView.as_view()), name='tasks'),
