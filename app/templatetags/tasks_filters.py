@@ -57,7 +57,7 @@ def get_participants(id = None):
         except:
             return safestring.mark_safe(''.join(html))
 
-        participants = Task_Partipant.objects.filter(task = task.id).select_related('participant')
+        participants = Task_Participant.objects.filter(task = task.id).select_related('participant')
         
         for rec in participants:
             html.append('<span class="user-item pull-left" id="rec-'+str(rec.task_id)+'-'+str(rec.participant_id)+'">'+rec.participant.username+'</span>')
@@ -100,7 +100,7 @@ def participants_present(value):
         except:
             return False
 
-        participants = Task_Partipant.objects.filter(task = task).count()
+        participants = Task_Participant.objects.filter(task = task).count()
 
         if participants > 0:
             return True

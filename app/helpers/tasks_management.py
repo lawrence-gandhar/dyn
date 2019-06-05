@@ -13,6 +13,8 @@ from django.db.models import Q, When
 from django.core.exceptions import ObjectDoesNotExist
 
 from django.utils import timezone, safestring
+from datetime import *
+
 
 from app.helpers import user_management
 
@@ -32,7 +34,7 @@ def edit_task_form_template(id):
     part_list = []
     obs_list = []
     
-    participants = Task_Partipant.objects.filter(task = task.id).values_list('participant', flat = True)
+    participants = Task_Participant.objects.filter(task = task.id).values_list('participant', flat = True)
     for p in participants:
         part_list.append(p)
 
@@ -71,7 +73,7 @@ def edit_task_form_template(id):
     html.append('<div class="row form-group" style="margin-bottom:2px;margin-top:10px;">')
     html.append('<label for="deadline" class="col-md-3 control-label" style="text-align:right; line-height:30px; font-size:80%">Deadline</label>')
     html.append('<div class=" col-md-9 input-group date" id="datetimepicker1" style="padding-right: 10px;padding-left: 10px;">')
-    html.append('<input autocomplete="off" type="text" class="form-control" name="deadline"/>')
+    html.append('<input autocomplete="off" type="text" class="form-control" name="deadline" value="'+(task.deadline).strftime("%Y-%m-%d %H:%M:%S")+'"/>')
     html.append('<span class="input-group-addon">')
     html.append('<i class="pe-7s-timer" style="color:#ffffff"></i>')
     html.append('</span>')
@@ -81,19 +83,25 @@ def edit_task_form_template(id):
     html.append('<div class="row form-group" style="margin-bottom:2px;margin-top:5px;">')
     html.append('<label for="high_priority" class="col-md-2 control-label" style="text-align:right; line-height:30px; font-size:80%">High Priority</label>')
     html.append('<div class="col-md-1">')
-    html.append('<input type="checkbox" value="1" id="high_priority" name="high_priority" style="margin-top:10px;">')
+
+    high_priority = 'checked' if task.high_priority else ''
+    email_notification = 'checked' if task.email_notification else ''
+    remind = 'checked' if task.remind else ''
+    repeat = 'checked' if task.repeat else ''
+
+    html.append('<input '+high_priority+' type="checkbox" value="1" id="high_priority" name="high_priority" style="margin-top:10px;">')
     html.append('</div>')
     html.append('<label for="email_notification" class="col-md-2 control-label" style="text-align:right; line-height:30px; font-size:80%">Email Notify</label>')
     html.append('<div class="col-md-1">')
-    html.append('<input type="checkbox" value="1" id="email_notification" name="email_notification" style="margin-top:10px;">')
+    html.append('<input '+email_notification+' type="checkbox" value="1" id="email_notification" name="email_notification" style="margin-top:10px;">')
     html.append('</div>')
     html.append('<label for="remind" class="col-md-2 control-label" style="text-align:right; line-height:30px; font-size:80%">Remind</label>')
     html.append('<div class="col-md-1">')
-    html.append('<input type="checkbox" value="1" id="remind" name="remind" style="margin-top:10px;">')
+    html.append('<input '+remind+' type="checkbox" value="1" id="remind" name="remind" style="margin-top:10px;">')
     html.append('</div>')
     html.append('<label for="repeat" class="col-md-2 control-label" style="text-align:right; line-height:30px; font-size:80%">Repeat</label>')
     html.append('<div class="col-md-1">')
-    html.append('<input type="checkbox" value="1" id="repeat" name="repeat" style="margin-top:10px;">')
+    html.append('<input '+repeat+' type="checkbox" value="1" id="repeat" name="repeat" style="margin-top:10px;">')
     html.append('</div>')
     html.append('</div>')
     html.append('<hr style="margin-top: 0px; margin-bottom: 10px">')

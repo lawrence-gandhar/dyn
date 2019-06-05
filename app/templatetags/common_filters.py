@@ -120,7 +120,7 @@ def user_list(name = '', multiple = ''):
 @register.simple_tag
 def tick_mark(value):
     if value:
-        html = '<i class="pe-7s-light" style="color:#FCF402"></i>'
+        html = '<i class="pe-7s-light" style="color:#1bfc02"></i>'
     else:
         html = '<i class="pe-7s-light"></i>'
 

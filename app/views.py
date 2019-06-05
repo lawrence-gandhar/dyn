@@ -206,7 +206,7 @@ def add_task(request):
                 log.append('Observers added')
 
             for id in participants:
-                task_participants = Task_Partipant(
+                task_participants = Task_Participant(
                     task_id = task_table.id,
                     participant_id = int(id),
                     created_by = request.user,
@@ -272,7 +272,7 @@ def remove_participants(request):
         except:
             return HttpResponse(0)
 
-        task_par = Task_Partipant.objects.filter(task = tasks).delete()
+        task_par = Task_Participant.objects.filter(task = tasks).delete()
 
         task_log = Task_Logs(
                     task_id = tasks.id,

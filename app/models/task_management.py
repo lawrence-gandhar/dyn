@@ -53,7 +53,7 @@ class Task_Observer(models.Model):
 #   TASK PARTICIPANTS MODEL
 #
 
-class Task_Partipant(models.Model):
+class Task_Participant(models.Model):
     task = models.ForeignKey(Task_Table, null = False, blank = False, db_index = True, on_delete = models.CASCADE,)
     participant = models.ForeignKey(User, db_index = True, null = True, on_delete = models.SET_NULL, related_name = 'participant',)
     created_by = models.ForeignKey(User, db_index = True, on_delete = models.SET_NULL, null = True,)
