@@ -69,7 +69,7 @@ def forgot_password(request):
 #***************************************************************************************
 # Register user
 #***************************************************************************************
-class registerUserView(View):
+class RegisterUserView(View):
     template_name = 'registration/register_user.html'
 
     def get(self, request):
