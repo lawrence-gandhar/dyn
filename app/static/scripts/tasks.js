@@ -45,11 +45,17 @@ $(document).ready(function(){
     
 });
 
-function open_my_row(id){
-    $("tr.parent-rows").removeAttr("style");
-    $("#parent-row-"+id).css({"background-color":"#F8A900","color":"#ffffff"});
-    $("tr.hidden-rows").css('display','none');
-    $("#row-"+id).show();
+function open_my_row(id){   
+    if($("#row-"+id).is(":visible")==false){
+        $("tr.parent-rows").removeAttr("style");
+        $("#parent-row-"+id).css({"background-color":"#1d1d1d","color":"#ffffff"});
+        $("tr.hidden-rows").css('display','none');
+        $("#row-"+id).show();
+    }else{
+        $("tr.parent-rows").removeAttr("style");
+        $("tr.hidden-rows").css('display','none');
+        $("#row-"+id).hide();
+    }    
 }
 
 
