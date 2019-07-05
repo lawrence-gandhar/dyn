@@ -794,13 +794,13 @@ fieldset[disabled] .btn-danger.focus {
   background-color: #f6a821;
 }
 body {
-  background: #2f323b;
+  /*background: #2f323b;*/
   font-family: 'Roboto', sans-serif;
   color: #949ba2;
 }
 .content {
   margin-top: 60px;
-  margin-left: 200px;
+  /*margin-left: 200px;*/
   position: relative;
   padding: 30px;
   transition: margin-left 0.3s ease-out;
@@ -823,7 +823,7 @@ body {
 .navigation {
   margin-top: 60px;
   background-color: #24262d;
-  width: 200px;
+  /*width: 200px;*/
   position: absolute;
   left: 0;
   bottom: 0;
@@ -832,7 +832,7 @@ body {
   -webkit-transition: left 0.3s ease-out;
 }
 .navigation nav {
-  background-color: #2a2d35;
+  background-color: #F8A900;
 }
 .navigation:before {
   transition: left 0.3s ease-out;
@@ -844,16 +844,16 @@ body {
   z-index: -1;
   left: 0;
   background-color: #24262d;
-  width: 200px;
+  /*width: 200px;*/
 }
 body.nav-toggle .content {
   margin-left: 0;
 }
 body.nav-toggle .navigation {
-  left: -200px;
+  /*left: -200px;*/
 }
 body.nav-toggle .navigation:before {
-  left: -200px;
+  /*left: -200px;*/
 }
 @media (max-width: 767px) {
   .content {

@@ -348,7 +348,7 @@ def edit_task(request):
             log = ['Task Edit by '+str(request.user.username)]
 
             if len(observers) > 0:
-                task_par = Task_Observer.objects.filter(task = task).delete()
+                Task_Observer.objects.filter(task = task).delete()
 
                 for id in observers:
                     task_observers = Task_Observer(
@@ -361,7 +361,7 @@ def edit_task(request):
                 log.append('Observers added')
 
             if len(participants) > 0:
-                task_par = Task_Participant.objects.filter(task = task).delete()
+                Task_Participant.objects.filter(task = task).delete()
 
                 for id in participants:
                     task_participants = Task_Participant(
