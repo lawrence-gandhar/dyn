@@ -44,6 +44,7 @@ def edit_task_form_template(id):
 
 
     html = ['<div class="row form-group" style="margin-bottom:2px;margin-top:5px;">']
+    html.append('<input type="hidden" value="'+str(task.id)+'" name="id">')
     html.append('<label for="subject" class="col-md-3 control-label" style="text-align:right; line-height:30px; font-size:80%">Title</label>')
     html.append('<div class="col-md-9">')
     html.append('<input  autocomplete="off" type="text" class="form-control input-sm" id="subject" name="subject" value="'+task.subject+'" required>')

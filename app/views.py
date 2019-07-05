@@ -143,7 +143,7 @@ class TasksView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["css_files"] = []
-        context["js_files"] = ["vendor/moment/moment.js", "vendor/datetime/datetime.js", "vendor/select2/dist/js/select2.js", "scripts/tasks.js"]
+        context["js_files"] = ["vendor/moment/moment.js", "vendor/datetime/datetime.js", "vendor/select2/dist/js/select2.js", "js_files/tasks.js"]
                 
         return context
 
@@ -276,7 +276,7 @@ def remove_participants(request):
 
         task_log = Task_Logs(
                     task_id = tasks.id,
-                    logs = 'Observers removed by '+request.user.username
+                    logs = 'Participants removed by '+request.user.username
                 )
 
         task_log.save()
@@ -316,6 +316,96 @@ def edit_task_form(request):
 
 @login_required
 def edit_task(request):
-    if request.is_ajax():
-        return HttpResponse(1)
-    return HttpResponse(0)
+    if request.is_ajax() and request.POST["id"]:
+
+        responsible_person = request.POST.get("responsible_person", "")
+
+        try:
+            responsible_person = User.objects.get(pk = int(responsible_person))
+        except:
+            return JsonResponse({'ret':False,'message':'Error Occurred! Check data.'})
+
+        try:
+            task = Task_Table.objects.get(pk = request.POST["id"])
+
+            task.subject = request.POST.get("subject", "")
+            task.details = request.POST.get("details", "")
+            task.responsible_person = responsible_person
+            task.deadline = request.POST.get("deadline", "")
+            task.high_priority = request.POST.get("high_priority", False)
+            task.email_notification = request.POST.get("email_notification", False)
+            task.remind = request.POST.get("remind", False)
+            task.repeat = request.POST.get("repeat", False)
+
+            task.save()
+
+            #
+            #   ADD OBSERVERS AND PARTICIPANTS IF ANY ADDED
+            #
+            observers = request.POST.getlist('observers')
+            participants = request.POST.getlist('participants')
+
+            log = ['Task Edit by '+str(request.user.username)]
+
+            if len(observers) > 0:
+                task_par = Task_Observer.objects.filter(task = task).delete()
+
+                for id in observers:
+                    task_observers = Task_Observer(
+                    task_id = task.id,
+                    observer_id = int(id),
+                    created_by = request.user,
+                )
+
+                task_observers.save()
+                log.append('Observers added')
+
+            if len(participants) > 0:
+                task_par = Task_Participant.objects.filter(task = task).delete()
+
+                for id in participants:
+                    task_participants = Task_Participant(
+                    task_id = task.id,
+                    participant_id = int(id),
+                    created_by = request.user,
+                )
+
+                task_participants.save()
+                log.append('Participants added')
+
+            #
+            #   ADD LOGS
+            try:
+                task_log = Task_Logs(
+                    task_id = task.id,
+                    logs = '. '.join(log)
+                )
+
+                task_log.save()
+                return JsonResponse({'ret':True,'message':'Data Edited Successfully'})
+            except:
+                return JsonResponse({'ret':False,'message':'Logging Failed! Check Data and try again'})
+
+        except:
+            return JsonResponse({'ret':False,'message':'Error Occurred! Contact Administrator.'})
+    return JsonResponse({'ret':False,'message':'Error Occurred! Contact Administrator.'})
+
+
+#
+#**************************************************************************************
+#   EDIT TASK 
+#**************************************************************************************
+class MoreOptionsView(View):
+    template_name = 'app/task_more_options.html'
+
+    data = dict()
+    data["css_files"] = []
+    data["js_files"] = ["vendor/moment/moment.js", "vendor/datetime/datetime.js","vendor/select2/dist/js/select2.js","js_files/tasks.js"]
+
+    def get(self, request, id):
+        try:
+            self.data["task"] = Task_Table.objects.get(pk = int(id))
+        except:
+            return HttpResponse(status=404)
+
+        return render(request, self.template_name, self.data)

@@ -1,0 +1,289 @@
+{% extends 'app/base.html' %}
+{% block content %}
+
+{% load common_filters %}
+{% load tasks_filters %}
+<style>
+
+table thead{
+    background-color: #ffa200;
+    color: #ffffff;
+}
+
+span.user-item{
+    border: 1px solid #eeeeee;
+    padding: 5px 10px;
+    text-align:left;
+    background-color:#F8A900; 
+    color:#000000;
+    margin-right: 10px;
+}
+
+.panel{
+    border: 1px solid #c37e08;
+    border-radius: 0px;
+}
+
+.panel-heading-new{
+    background-color: #f5a212; 
+    border: 1px solid #c37e08;
+    padding: 5px 10px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.btn-danger:active, .btn-danger.active {
+    color: #ffffff;
+    background-color: rgba(219, 82, 75,1);
+    border-color: #db524b;
+}
+
+.btn-success:active, .btn-success.active  {
+    color: #ffffff;
+    background-color: rgba(27, 191, 137, 1);
+    border-color: #2ce1a5;
+    outline: 0;
+    box-shadow: none;
+}
+
+</style>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="view-header">
+            <div class="header-icon">
+                <i class="pe page-header-icon pe-7s-wristwatch"></i>
+            </div>
+            <div class="header-title">
+                <h3>Task - More Options</h3>
+                <small>
+                    Set Priority, Scheduling & Communication
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-6">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading-new">TASK DETAILS</div>
+                <div class="panel-body">
+                    <table class="table table-responsive" style="margin:0px; font-size:80%">
+                        <tr style="border:0px;">
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Subject</td>
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">{{task.subject|safe}}</td>
+                        </tr>
+                        <tr style="border:0px;">
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212;">Details</td>
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">{{task.details|safe}}</td>
+                        </tr>
+                        <tr style="border:0px;">
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212;">Responsible Person</td>
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">{{task.responsible_person|safe}}</td>
+                        </tr>                    
+                        <tr style="border:0px;">
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212;">Observers</td>
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
+                                {% get_observers task.id %}
+                            </td>
+                        </tr>
+                        <tr style="border:0px;">
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212;">Participants</td>
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
+                                {% get_participants tasks.id %}
+                            </td>
+                        </tr>
+                        <tr style="border:0px;">
+                            <td style="border:0px; color:#f5a212;">Deadline</td>
+                            <td style="border:0px; color:#ffffff">{{task.deadline|date:'d M, Y - H:i:s'}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading-new">SCHEDULING AND OTHERS</div>
+                <div class="panel-body">
+                    <table class="table table-responsive" style="margin:0px; font-size:85%; margin-bottom:0px;">
+                        <tr style="border:0px;">
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:130px;">Schedule</td>
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212;">
+                                <div class="col-md-4 text-center">
+                                    <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                        <label class="btn btn-secondary btn-xs active btn-success" style="border-radius:0px; width:50px;">
+                                            <input type="radio" name="options" id="option1" autocomplete="off" checked> Yes
+                                        </label>
+                                        <label class="btn btn-secondary btn-xs btn-danger" style="border-radius:0px; width:50px;">
+                                            <input type="radio" name="options" id="option2" autocomplete="off"> No
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class='input-group date' id='datetimepicker1' title="Start Date">
+                                        <input type='text' class="form-control" style="height:25px;" />
+                                        <span class="input-group-addon" style="padding:4px;color:#ffffff">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class='input-group date' id='datetimepicker2' title="End Date">
+                                        <input type='text' class="form-control" style="height:25px;" />
+                                        <span class="input-group-addon" style="padding:4px;color:#ffffff">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>                            
+                        </tr>
+                        <tr style="border:0px;">
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:130px;">Notification Time</td>
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff;">
+                                <div class="col-md-10">
+                                    * * * * *
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-warning btn-xs" type="button"><i class="fa fa-gear"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>    
+    <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading-new">OPTIONS</div>
+            <div class="panel-body" style="padding-bottom: 0px;">
+                <table class="table table-responsive" style="margin:0px; font-size:85%; margin-bottom:0px;">
+                    <tr style="border:0px;">
+                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Notify Observer</td>
+                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
+                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                <label class="btn btn-secondary btn-xs active btn-success" style="border-radius:0px; width:50px;">
+                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Yes
+                                </label>
+                                <label class="btn btn-secondary btn-xs btn-danger" style="border-radius:0px; width:50px;">
+                                    <input type="radio" name="options" id="option2" autocomplete="off"> No
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="border:0px;">
+                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Notify Observer By</td>
+                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
+                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                <label class="btn btn-secondary btn-xs active btn-success" style="border-radius:0px; width:50px;">
+                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Mail
+                                </label>
+                                <label class="btn btn-secondary btn-xs btn-danger" style="border-radius:0px; width:50px;">
+                                    <input type="radio" name="options" id="option2" autocomplete="off"> PopUp
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="border:0px;">
+                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Notify Participant</td>
+                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
+                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                <label class="btn btn-secondary btn-xs active btn-success" style="border-radius:0px; width:50px;">
+                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Yes
+                                </label>
+                                <label class="btn btn-secondary btn-xs btn-danger" style="border-radius:0px; width:50px;">
+                                    <input type="radio" name="options" id="option2" autocomplete="off"> No
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="border:0px;">
+                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Notify Participant By</td>
+                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
+                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                <label class="btn btn-secondary btn-xs active btn-success" style="border-radius:0px; width:50px;">
+                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Mail
+                                </label>
+                                <label class="btn btn-secondary btn-xs btn-danger" style="border-radius:0px; width:50px;">
+                                    <input type="radio" name="options" id="option2" autocomplete="off"> PopUp
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="border:0px;">
+                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Notify 24 Hrs ago</td>
+                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
+                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                <label class="btn btn-secondary btn-xs  btn-success" style="border-radius:0px; width:50px;">
+                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Yes
+                                </label>
+                                <label class="btn btn-secondary btn-xs active btn-danger" style="border-radius:0px; width:50px;">
+                                    <input type="radio" name="options" id="option2" autocomplete="off"> No
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="border:0px;">
+                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Notify Once Everyday</td>
+                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
+                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                <label class="btn btn-secondary btn-xs  btn-success" style="border-radius:0px; width:50px;">
+                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Yes
+                                </label>
+                                <label class="btn btn-secondary btn-xs active btn-danger" style="border-radius:0px; width:50px;">
+                                    <input type="radio" name="options" id="option2" autocomplete="off"> No
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="border:0px;">
+                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Stop Notification After Deadline</td>
+                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
+                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                <label class="btn btn-secondary btn-xs  btn-success" style="border-radius:0px; width:50px;">
+                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Yes
+                                </label>
+                                <label class="btn btn-secondary btn-xs active btn-danger" style="border-radius:0px; width:50px;">
+                                    <input type="radio" name="options" id="option2" autocomplete="off"> No
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="border:0px;">
+                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Enable Oberserver Reply</td>
+                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
+                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                <label class="btn btn-secondary btn-xs  btn-success" style="border-radius:0px; width:50px;">
+                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Yes
+                                </label>
+                                <label class="btn btn-secondary btn-xs active btn-danger" style="border-radius:0px; width:50px;">
+                                    <input type="radio" name="options" id="option2" autocomplete="off"> No
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="border:0px;">
+                        <td style="border:0px; color:#f5a212; width:150px;">Enable Participant Reply</td>
+                        <td style="border:0px; color:#ffffff">
+                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                <label class="btn btn-secondary btn-xs  btn-success" style="border-radius:0px; width:50px;">
+                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Yes
+                                </label>
+                                <label class="btn btn-secondary btn-xs active btn-danger" style="border-radius:0px; width:50px;">
+                                    <input type="radio" name="options" id="option2" autocomplete="off"> No
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+{% endblock %}
