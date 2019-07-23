@@ -62,7 +62,7 @@ def get_participants(id = None):
         for rec in participants:
             html.append('<span class="user-item pull-left" id="rec-'+str(rec.task_id)+'-'+str(rec.participant_id)+'">'+rec.participant.username+'</span>')
         return safestring.mark_safe(''.join(html))
-        
+    
     return safestring.mark_safe(''.join(html))
 
 

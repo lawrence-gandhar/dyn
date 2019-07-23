@@ -67,7 +67,7 @@ span.user-item{
 
 <div class="row">
     <div class="col-lg-8 col-md-8 col-sm-6">
-        <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="col-lg-12 col-md-12 col-sm-12" style="padding:0px;">
             <div class="panel panel-default">
                 <div class="panel-heading-new">TASK DETAILS</div>
                 <div class="panel-body">
@@ -93,7 +93,7 @@ span.user-item{
                         <tr style="border:0px;">
                             <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212;">Participants</td>
                             <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
-                                {% get_participants tasks.id %}
+                                {% get_participants task.id %}
                             </td>
                         </tr>
                         <tr style="border:0px;">
@@ -104,9 +104,9 @@ span.user-item{
                 </div>
             </div>
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="col-lg-12 col-md-12 col-sm-12" style="padding:0px;">
             <div class="panel panel-default">
-                <div class="panel-heading-new">SCHEDULING AND OTHERS</div>
+                <div class="panel-heading-new">TASK SCHEDULING AND OTHERS</div>
                 <div class="panel-body">
                     <table class="table table-responsive" style="margin:0px; font-size:85%; margin-bottom:0px;">
                         <tr style="border:0px;">
@@ -158,128 +158,134 @@ span.user-item{
     </div>    
     <div class="col-lg-4 col-md-4 col-sm-6">
         <div class="panel panel-default">
-            <div class="panel-heading-new">OPTIONS</div>
-            <div class="panel-body" style="padding-bottom: 0px;">
-                <table class="table table-responsive" style="margin:0px; font-size:85%; margin-bottom:0px;">
-                    <tr style="border:0px;">
-                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Notify Observer</td>
-                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
-                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
-                                <label class="btn btn-secondary btn-xs active btn-success" style="border-radius:0px; width:50px;">
-                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Yes
-                                </label>
-                                <label class="btn btn-secondary btn-xs btn-danger" style="border-radius:0px; width:50px;">
-                                    <input type="radio" name="options" id="option2" autocomplete="off"> No
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr style="border:0px;">
-                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Notify Observer By</td>
-                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
-                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
-                                <label class="btn btn-secondary btn-xs active btn-success" style="border-radius:0px; width:50px;">
-                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Mail
-                                </label>
-                                <label class="btn btn-secondary btn-xs btn-danger" style="border-radius:0px; width:50px;">
-                                    <input type="radio" name="options" id="option2" autocomplete="off"> PopUp
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr style="border:0px;">
-                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Notify Participant</td>
-                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
-                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
-                                <label class="btn btn-secondary btn-xs active btn-success" style="border-radius:0px; width:50px;">
-                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Yes
-                                </label>
-                                <label class="btn btn-secondary btn-xs btn-danger" style="border-radius:0px; width:50px;">
-                                    <input type="radio" name="options" id="option2" autocomplete="off"> No
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr style="border:0px;">
-                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Notify Participant By</td>
-                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
-                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
-                                <label class="btn btn-secondary btn-xs active btn-success" style="border-radius:0px; width:50px;">
-                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Mail
-                                </label>
-                                <label class="btn btn-secondary btn-xs btn-danger" style="border-radius:0px; width:50px;">
-                                    <input type="radio" name="options" id="option2" autocomplete="off"> PopUp
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr style="border:0px;">
-                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Notify 24 Hrs ago</td>
-                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
-                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
-                                <label class="btn btn-secondary btn-xs  btn-success" style="border-radius:0px; width:50px;">
-                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Yes
-                                </label>
-                                <label class="btn btn-secondary btn-xs active btn-danger" style="border-radius:0px; width:50px;">
-                                    <input type="radio" name="options" id="option2" autocomplete="off"> No
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr style="border:0px;">
-                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Notify Once Everyday</td>
-                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
-                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
-                                <label class="btn btn-secondary btn-xs  btn-success" style="border-radius:0px; width:50px;">
-                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Yes
-                                </label>
-                                <label class="btn btn-secondary btn-xs active btn-danger" style="border-radius:0px; width:50px;">
-                                    <input type="radio" name="options" id="option2" autocomplete="off"> No
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr style="border:0px;">
-                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Stop Notification After Deadline</td>
-                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
-                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
-                                <label class="btn btn-secondary btn-xs  btn-success" style="border-radius:0px; width:50px;">
-                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Yes
-                                </label>
-                                <label class="btn btn-secondary btn-xs active btn-danger" style="border-radius:0px; width:50px;">
-                                    <input type="radio" name="options" id="option2" autocomplete="off"> No
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr style="border:0px;">
-                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Enable Oberserver Reply</td>
-                        <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
-                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
-                                <label class="btn btn-secondary btn-xs  btn-success" style="border-radius:0px; width:50px;">
-                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Yes
-                                </label>
-                                <label class="btn btn-secondary btn-xs active btn-danger" style="border-radius:0px; width:50px;">
-                                    <input type="radio" name="options" id="option2" autocomplete="off"> No
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr style="border:0px;">
-                        <td style="border:0px; color:#f5a212; width:150px;">Enable Participant Reply</td>
-                        <td style="border:0px; color:#ffffff">
-                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
-                                <label class="btn btn-secondary btn-xs  btn-success" style="border-radius:0px; width:50px;">
-                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Yes
-                                </label>
-                                <label class="btn btn-secondary btn-xs active btn-danger" style="border-radius:0px; width:50px;">
-                                    <input type="radio" name="options" id="option2" autocomplete="off"> No
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="panel-heading-new">
+                    OPTIONS
+                    <button type="submit" class="btn btn-default btn-xs pull-right active" style="margin-top: -1px;">SAVE</button>
+                </div>
+                <div class="panel-body" style="padding-bottom: 0px;">
+                    <table class="table table-responsive" style="margin:0px; font-size:85%; margin-bottom:0px;">
+                        <tr style="border:0px;">
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Notify Observer</td>
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
+                                <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                    <label class="btn btn-secondary btn-xs btn-success" style="border-radius:0px; width:50px;">
+                                        <input type="radio" name="notify_observer" id="notify_observer1" value="1" autocomplete="off"> Yes
+                                    </label>
+                                    <label class="btn btn-secondary btn-xs btn-danger" style="border-radius:0px; width:50px; margin-left:0px;">
+                                        <input type="radio" name="notify_observer" id="notify_observer2" value="0" autocomplete="off"> No
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="border:0px;">
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Notify Observer By</td>
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
+                                <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                    <label class="btn btn-secondary btn-xs btn-success" style="border-radius:0px; width:50px;">
+                                        <input type="radio" name="notify_observer_by" id="notify_observer_by1" value="1" autocomplete="off"> Mail
+                                    </label>
+                                    <label class="btn btn-secondary btn-xs btn-danger" style="border-radius:0px; width:50px; margin-left:0px;">
+                                        <input type="radio" name="notify_observer_by" id="notify_observer_by2" value="0" autocomplete="off"> PopUp
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="border:0px;">
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Notify Participant</td>
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
+                                <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                    <label class="btn btn-secondary btn-xs btn-success" style="border-radius:0px; width:50px;">
+                                        <input type="radio" name="notify_participant" id="notify_participant1" value="1" autocomplete="off"> Yes
+                                    </label>
+                                    <label class="btn btn-secondary btn-xs btn-danger" style="border-radius:0px; width:50px; margin-left:0px;">
+                                        <input type="radio" name="notify_participant" id="notify_participant2" value="0" autocomplete="off"> No
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="border:0px;">
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Notify Participant By</td>
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
+                                <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                    <label class="btn btn-secondary btn-xs btn-success" style="border-radius:0px; width:50px;">
+                                        <input type="radio" name="notify_participant_by" id="notify_participant_by1" value="1" autocomplete="off"> Mail
+                                    </label>
+                                    <label class="btn btn-secondary btn-xs btn-danger" style="border-radius:0px; width:50px; margin-left:0px;">
+                                        <input type="radio" name="notify_participant_by" id="notify_participant_by2" value="0" autocomplete="off"> PopUp
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="border:0px;">
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Notify 24 Hrs ago</td>
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
+                                <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                    <label class="btn btn-secondary btn-xs btn-success" style="border-radius:0px; width:50px;">
+                                        <input type="radio" name="notify_24_hrs_ago" id="notify_24_hrs_ago1" value="1" autocomplete="off"> Yes
+                                    </label>
+                                    <label class="btn btn-secondary btn-xs btn-danger" style="border-radius:0px; width:50px; margin-left:0px;">
+                                        <input type="radio" name="notify_24_hrs_ago" id="notify_24_hrs_ago2" value="0" autocomplete="off"> No
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="border:0px;">
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Notify Once Everyday</td>
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
+                                <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                    <label class="btn btn-secondary btn-xs btn-success" style="border-radius:0px; width:50px;">
+                                        <input type="radio" name="notify_once_everyday" id="notify_once_everyday1" value="1" autocomplete="off"> Yes
+                                    </label>
+                                    <label class="btn btn-secondary btn-xs btn-danger" style="border-radius:0px; width:50px; margin-left:0px;">
+                                        <input type="radio" name="notify_once_everyday" id="notify_once_everyday2" value="0" autocomplete="off"> No
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="border:0px;">
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Stop Notification After Deadline</td>
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
+                                <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                    <label class="btn btn-secondary btn-xs btn-success" style="border-radius:0px; width:50px;">
+                                        <input type="radio" name="stop_after_deadline" id="stop_after_deadline1" value="1" autocomplete="off"> Yes
+                                    </label>
+                                    <label class="btn btn-secondary btn-xs btn-danger" style="border-radius:0px; width:50px; margin-left:0px;">
+                                        <input type="radio" name="stop_after_deadline" id="stop_after_deadline2" value="0" autocomplete="off"> No
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="border:0px;">
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#f5a212; width:150px;">Enable Oberserver Reply</td>
+                            <td style="border:0px; border-bottom: 1px solid #f5a212; color:#ffffff">
+                                <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                    <label class="btn btn-secondary btn-xs btn-success" style="border-radius:0px; width:50px;">
+                                        <input type="radio" name="enable_observer_reply" id="enable_observer_reply1" value="1" autocomplete="off"> Yes
+                                    </label>
+                                    <label class="btn btn-secondary btn-xs btn-danger" style="border-radius:0px; width:50px; margin-left:0px;">
+                                        <input type="radio" name="enable_observer_reply" id="enable_observer_reply2" value="0" autocomplete="off"> No
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="border:0px;">
+                            <td style="border:0px; color:#f5a212; width:150px;">Enable Participant Reply</td>
+                            <td style="border:0px; color:#ffffff">
+                                <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons">
+                                    <label class="btn btn-secondary btn-xs btn-success" style="border-radius:0px; width:50px;">
+                                        <input type="radio" name="enable_participant_reply" id="enable_participant_reply1" value="1" autocomplete="off"> Yes
+                                    </label>
+                                    <label class="btn btn-secondary btn-xs btn-danger" style="border-radius:0px; width:50px; margin-left:0px;">
+                                        <input type="radio" name="enable_participant_reply" id="enable_participant_reply2" value="0" autocomplete="off"> No
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
         </div>
     </div>
     

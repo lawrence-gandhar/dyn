@@ -78,7 +78,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'USER': 'postgres',
-		'PASSWORD':'abc',
+		'PASSWORD':'fusion@123',
 		'HOST': 'localhost',
         'NAME': 'dyn_no',
     },
@@ -123,6 +123,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 LOGIN_URL = 'login/'
 LOGIN_REDIRECT_URL = 'dashboard'
-LOGOUT_REDIRECT_URL = '/accounts/login/'
+LOGOUT_REDIRECT_URL = '/'
 
 PAGE_TITLE = 'DYN'

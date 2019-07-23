@@ -91,4 +91,18 @@ class Task_Notification(models.Model):
         db_table = 'task_notification_tbl'
         verbose_name_plural = 'Task Notification Table'
 
-
+class Task_Notification_Settings(models.Model):
+    task = models.ForeignKey(Task_Table, null = False, blank = False, db_index = True, on_delete = models.CASCADE,)
+    notify_observer = models.BooleanField(default = False, db_index = True,)
+    notify_observer_by = models.BooleanField(default = False, db_index = True,)
+    notify_participant = models.BooleanField(default = False, db_index = True,)
+    notify_participant_by = models.BooleanField(default = False, db_index = True,)
+    notify_24_hrs_ago = models.BooleanField(default = False, db_index = True,)
+    notify_once_everyday = models.BooleanField(default = False, db_index = True,)
+    stop_after_deadline = models.BooleanField(default = False, db_index = True,)
+    enable_observer_reply = models.BooleanField(default = False, db_index = True,)
+    enable_participant_reply = models.BooleanField(default = False, db_index = True,)
+    
+    class Meta:
+        db_table = 'task_notification_settings_tbl'
+        verbose_name_plural = 'Task Notification Settings Table'

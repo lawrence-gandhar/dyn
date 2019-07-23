@@ -70,7 +70,7 @@ span.user-item{
                     <td>{{tasks.created_by|safe}}</td>
                     <td>{{tasks.created_on}}</td>
                 </tr>
-                <tr id="row-{{tasks.id|safe}}" style="display:none" class="hidden-rows">
+                <tr id="row-{{tasks.id|safe}}" style="display:none; background-color:#494b54" class="hidden-rows">
                     <td colspan="20" class="table-responsive">   
                         <table class="table table-bordered" style="margin:0px;background: transparent">
                             <tr>
@@ -128,7 +128,7 @@ span.user-item{
 <div class="modal" id="modal-add-task" tabindex="-1" role="dialog" style="background-color: rgba(242, 242, 242, 0.8)">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-body" style="padding: 15px 10px 10px 10px; ">
+            <div class="modal-body" style="padding: 15px 10px 0px 10px; ">
                 <h5 class="m-t-none">Add Task</h5>
                 <hr style="margin:0px">
                 <form method="POST" class="add-task-form">
@@ -198,8 +198,8 @@ span.user-item{
                         <button type="button" class="btn btn-default btn-xs" data-dismiss="modal">Close</button>
                     </div>
                 </form>                
-                <div class="row" style="margin-top:10px;font-size:80%">
-                    <p style="background-color:#ff0000; color:#ffffff; padding:10px 10px; margin:0px">
+                <div class="row" style="margin-top:10px;font-size:80%;">
+                    <p style="background-color:#F8A900; color:#ffffff; padding:10px 10px; margin:0px;  border-radius:0px 0px 6px 6px;">
                     <span class="text-center" style="text-decoration:underline; display:block">NOTE</span> 
                     <br>
                     1. Please don't select the same person as responsible, observer and participant.
@@ -240,7 +240,7 @@ span.user-item{
 <div class="modal" id="modal-edit-task" tabindex="-1" role="dialog" style="background-color: rgba(242, 242, 242, 0.8)">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-body" style="padding: 15px 10px 10px 10px; ">
+            <div class="modal-body" style="padding: 15px 10px 0px 10px; ">
                 <h5 class="m-t-none">Edit Task</h5>
                 <hr style="margin:0px">
                 <form method="POST" class="edit-task-form">
@@ -253,7 +253,7 @@ span.user-item{
                     </div>
                 </form>                
                 <div class="row" style="margin-top:10px;font-size:80%">
-                    <p style="background-color:#ff0000; color:#ffffff; padding:10px 10px; margin:0px">
+                    <p style="background-color:#F8A900; color:#ffffff; padding:10px 10px; margin:0px; border-radius:0px 0px 6px 6px;">
                     <span class="text-center" style="text-decoration:underline; display:block">NOTE</span> 
                     <br>
                     1. Please don't select the same person as responsible, observer and participant.

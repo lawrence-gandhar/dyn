@@ -409,3 +409,37 @@ class MoreOptionsView(View):
             return HttpResponse(status=404)
 
         return render(request, self.template_name, self.data)
+
+    def post(self, request, id):
+        self.data["task"] = Task_Table.objects.get(pk = int(id))
+        
+        try:
+            obj = Task_Notification_Settings.objects.filter(task = self.data["task"])
+            
+            obj.notify_observer = int(request.GET.getlist('notify_observer', False))
+            obj.notify_observer_by = int(request.GET.getlist('notify_observer_by', False))
+            obj.notify_participant = int(request.GET.getlist('notify_participant', False))
+            obj.notify_participant_by = int(request.GET.getlist('notify_participant_by', False))
+            obj.notify_24_hrs_ago = int(request.GET.getlist('notify_24_hrs_ago', False))
+            obj.notify_once_everyday = int(request.GET.getlist('notify_once_everyday', False))
+            obj.stop_after_deadline = int(request.GET.getlist('stop_after_deadline', False))
+            obj.enable_observer_reply = int(request.GET.getlist('enable_observer_reply', False))
+            obj.enable_participant_reply = int(request.GET.getlist('enable_participant_reply', False))
+        
+        except Task_Notification_Settings.DoesNotExists:
+
+            obj = Task_Notification_Settings(
+                notify_observer = int(request.GET.getlist('notify_observer', False)),
+                notify_observer_by = int(request.GET.getlist('notify_observer_by', False)),
+                notify_participant = int(request.GET.getlist('notify_participant', False)),
+                notify_participant_by = int(request.GET.getlist('notify_participant_by', False)),
+                notify_24_hrs_ago = int(request.GET.getlist('notify_24_hrs_ago', False)),
+                notify_once_everyday = int(request.GET.getlist('notify_once_everyday', False)),
+                stop_after_deadline = int(request.GET.getlist('stop_after_deadline', False)),
+                enable_observer_reply = int(request.GET.getlist('enable_observer_reply', False)),
+                enable_participant_reply = int(request.GET.getlist('enable_participant_reply', False)),
+            )
+
+        finally:
+            obj.save()
+        return HttpResponse('')

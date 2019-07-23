@@ -102,10 +102,10 @@
     </style>
 
 </head>
-<body>
+<body style="">
 
 <!-- Wrapper-->
-<div class="wrapper">
+<div class="wrapper" style="">
 
     <!-- Header-->
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -131,7 +131,7 @@
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li class=" profil-link">
-                        <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="true">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="true" style="height: 60px; line-height: 42px;">
                             <span class="profile-address" style="text-transform:none">{{user.first_name|title}} {{user.last_name|title}}</span>
                             <img src="" class="img-circle">
                         </a>
@@ -168,10 +168,7 @@
     {% include 'menu_templates/right_menu.html' %}
     <!-- Navigation -->
 
-    
-
-
-    <section class="content">
+    <section class="content" style="margin-left:35px;"  style="">
         <div class="container-fluid" style="padding-right: 50px">
             {% block content %}
             {% endblock %}
